@@ -48,10 +48,7 @@ module.exports = {
                 }
             }
         */
-        /*
-        req.body.isStaff=false
-        req.body.isAdmin=false
-        */
+         
         const data = await User.create(req.body)
 
         res.status(201).send({
@@ -66,15 +63,7 @@ module.exports = {
             #swagger.summary = "Get Single User"
         */
        
-        //? Yetkisiz kullanıcının başka bir kullanıcıyı yönetmesini engelle (sadece kendi verileri):
-        // if (!req.user.isAdmin) {
-        //     req.params.id = req.user.id
-        // }
-        // const data = await User.findOne({ _id: req.params.id })
-
-        //? Yetkisiz kullanıcının başka bir kullanıcıyı yönetmesini engelle (sadece kendi verileri):
-        const id = req.user.isAdmin ? req.params.id : req.user.id
-        const data = await User.findOne({ _id: id })
+        
 
         res.status(200).send({
             error: false,

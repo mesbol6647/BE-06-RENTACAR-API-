@@ -26,11 +26,12 @@ module.exports = {
             }
         */
 
-        const { username, password } = req.body
+        const { username,email, password } = req.body
 
-        if (username && password) {
+        if ((username || email ) && password) {
 
-            const user = await User.findOne({ username })
+            // const user = await User.findOne({ username })
+            const user = await User.findOne({ $or:[{username},{email}] })
 
             if (user && user.password == passwordEncrypt(password)) {
 
@@ -50,7 +51,7 @@ module.exports = {
                     /* JWT */
 
                     const accessData = user.toJSON() // Valuable data.
-                    const accessTime = '1m'
+                    const accessTime = '30m'
                     const accessToken = jwt.sign(accessData, process.env.ACCESS_KEY, { expiresIn: accessTime })
                     // console.log('accessToken', accessToken)
 

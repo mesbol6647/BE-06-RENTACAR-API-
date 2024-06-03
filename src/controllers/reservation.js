@@ -59,16 +59,41 @@ module.exports = {
         if((!req.user.isAdmin && !req.user.isStaff) || !req.body.userId){
             req.body.userId=req.user._id
         }
-       // createdId ve updatedId verisini req.user'dan al:
+    // createdId ve updatedId verisini req.user'dan al:
        req.body.createdId=req.user._id
        req.body.updatedId=req.user._id
+
+    //kullanıcının çakışan tarihlerde başka bir rezervasyonu varmı?:
+
+    const userReservationInDates = await Reservation.findOne({
+        userId: req.body.userId,
+        // carId: req.body.carId, // Farklı bir araba kiralanabilir
+        $nor: [
+            { startDate: { $gt: req.body.endDate } }, // gt: >
+            { endDate: { $lt: req.body.startDate } } // lt: <
+        ]
+    })
+    // console.log(userReservationInDates)
+
+    if (userReservationInDates) {
+
+        res.errorStatusCode = 400
+        throw new Error(
+            'It cannot be added because there is another reservation with the same date.',
+            { cause: { userReservationInDates: userReservationInDates } }
+        )
+
+    } else {
+
         const data = await Reservation.create(req.body)
 
         res.status(201).send({
             error: false,
             data
         })
-    },
+    }
+},     
+    
 
     read: async (req, res) => {
         /*

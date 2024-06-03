@@ -22,12 +22,22 @@ module.exports = {
                 </ul>
             `
         */
+       //? Başka bir kullanıcı datasını görmeyi engeller
+            let customFilter={}
+            if(!req.user.isAdmin && !req.user.isStaff){
+                 customFilter={userId:req.user._id}
+            }
 
-        const data = await res.getModelList(Reservation)
+        const data = await res.getModelList(Reservation, customFilter, [
+            {path:"createdId", select:"username"},
+            {path:"updatedId", select:"username"},
+            {path:"userId", select:"username firstName lastName"},
+            {path:"carId"},
+        ])
 
         res.status(200).send({
             error: false,
-            details: await res.getModelListDetails(Reservation),
+            details: await res.getModelListDetails(Reservation, customFilter),
             data
         })
     },
@@ -65,9 +75,19 @@ module.exports = {
             #swagger.tags = ["Reservations"]
             #swagger.summary = "Get Single Reservation"
         */
+       //? Başka bir kullanıcı datasını görmeyi engeller
+       let customFilter={}
+       if(!req.user.isAdmin && !req.user.isStaff){
+            customFilter={userId:req.user._id}
+       }
        
         
-            const data = await Reservation.findOne({_id:req.params.id})
+        const data = await Reservation.findOne({_id:req.params.id, ...customFilter}).populate([
+            {path:"createdId", select:"username"},
+            {path:"updatedId", select:"username"},
+            {path:"userId", select:"username firstName lastName"},
+            {path:"carId"},
+        ])
         res.status(200).send({
             error: false,
             data

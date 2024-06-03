@@ -66,7 +66,7 @@ module.exports = {
         */
        //? Başka bir kullanıcıyı görmesini engelle:
        let customFilter={_id:req.params.id}
-       if(!req.user.isAdmin && !req.user.isAdmin){
+       if(!req.user.isAdmin && !req.user.isStaff){
             customFilter={_id:req.user._id}
        }
        
@@ -104,7 +104,7 @@ module.exports = {
         }
         //? Başka bir kullanıcıyı güncellemesini engelle:
         let customFilter={_id:req.params.id}
-        if(!req.user.isAdmin && !req.user.isAdmin){
+        if(!req.user.isAdmin && !req.user.isStaff){
              customFilter={_id:req.user._id}
         }
 

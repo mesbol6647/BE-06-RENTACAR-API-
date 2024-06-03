@@ -85,11 +85,10 @@ const CarSchema= new mongoose.Schema({
     required: true,
   },
 
-
-
-
-
+ 
 },{
     collection: "cars",
     timestamps:true
 })
+
+module.exports= mongoose.model('Car', CarSchema)

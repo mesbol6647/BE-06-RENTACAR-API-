@@ -64,8 +64,13 @@ module.exports = {
             #swagger.tags = ["Users"]
             #swagger.summary = "Get Single User"
         */
+       //? Başka bir kullanıcıyı görmesini engelle:
+       let customFilter={_id:req.params.id}
+       if(!req.user.isAdmin && !req.user.isAdmin){
+            customFilter={_id:req.user._id}
+       }
        
-        
+        const data = await User.findOne({customFilter})
 
         res.status(200).send({
             error: false,
@@ -92,9 +97,18 @@ module.exports = {
             }
         */
 
-        //? Yetkisiz kullanıcının başka bir kullanıcıyı yönetmesini engelle (sadece kendi verileri):
-        if (!req.user.isAdmin) req.params.id = req.user._id
-        const data = await User.updateOne({ _id: req.params.id }, req.body, { runValidators: true })
+        //? Admin olmayan isStaff ve isAdmin durumunu değiştiremez:
+        if (!req.user.isAdmin) {
+            delete req.body.isStaff
+            delete req.body.isAdmin
+        }
+        //? Başka bir kullanıcıyı güncellemesini engelle:
+        let customFilter={_id:req.params.id}
+        if(!req.user.isAdmin && !req.user.isAdmin){
+             customFilter={_id:req.user._id}
+        }
+
+        const data = await User.updateOne(customFilter , req.body, { runValidators: true })
 
         res.status(202).send({
             error: false,

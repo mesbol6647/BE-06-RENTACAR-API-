@@ -53,14 +53,23 @@ module.exports = {
 
         /*TARİHE GÖRE LİSTELE */
 
-        const data = await res.getModelList(Car, customFilter, [
+        // const data = await res.getModelList(Car, customFilter, [
+        //     {path:"createdId", select:"username"},
+        //     {path:"updatedId", select:"username"},
+        // ])
+        const data = await res.getModelList(Car, [
             {path:"createdId", select:"username"},
             {path:"updatedId", select:"username"},
         ])
 
+        // res.status(200).send({
+        //     error: false,
+        //     details: await res.getModelListDetails(Car, customFilter),
+        //     data
+        // })
         res.status(200).send({
             error: false,
-            details: await res.getModelListDetails(Car, customFilter),
+            details: await res.getModelListDetails(Car ),
             data
         })
     },

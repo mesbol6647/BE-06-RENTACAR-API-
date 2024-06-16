@@ -29,47 +29,38 @@ module.exports = {
             //URL?startDate=2024-01-01&endDate=2024-01-10
             
        
-        // const{startDate:getStartDate, endDate:getEndDate}=req.query
+        const{startDate:getStartDate, endDate:getEndDate}=req.query
 
-        // if(getStartDate && getEndDate){
-        //     // Belirtilen tarihlerde rezerve edilmiş araçları getir.
-        //     const reservedCars=await Reservation.find({
-        //         $nor:[
-        //             {startDate:{$gt:getEndDate}}, // gt: >
-        //             {endDate:{$lt:getStartDate}} // lt : <
-        //         ]
-        //     },{_id:0, carId:1}).distinct('carId') // convert to filterdata(distinct)
+        if(getStartDate && getEndDate){
+            // Belirtilen tarihlerde rezerve edilmiş araçları getir.
+            const reservedCars=await Reservation.find({
+                $nor:[
+                    {startDate:{$gt:getEndDate}}, // gt: >
+                    {endDate:{$lt:getStartDate}} // lt : <
+                ]
+            },{_id:0, carId:1}).distinct('carId') // convert to filterdata(distinct)
 
-        //     //filter objesine Notin ekle(nin):
-        //     if(reservedCars.length){
-        //     customFilter._id={$nin: reservedCars}
-        // }
+            //filter objesine Notin ekle(nin):
+            if(reservedCars.length){
+            customFilter._id={$nin: reservedCars}
+        }
 
-        // }else{
-        //     req.errorStatusCode=401
-        //     throw new Error( 'startDate and endDate queries are required')
-        // }
+        }else{
+            req.errorStatusCode=401
+            throw new Error( 'startDate and endDate queries are required')
+        }
        
 
         /*TARİHE GÖRE LİSTELE */
 
-        // const data = await res.getModelList(Car, customFilter, [
-        //     {path:"createdId", select:"username"},
-        //     {path:"updatedId", select:"username"},
-        // ])
-        const data = await res.getModelList(Car, [
+        const data = await res.getModelList(Car, customFilter, [
             {path:"createdId", select:"username"},
             {path:"updatedId", select:"username"},
         ])
 
-        // res.status(200).send({
-        //     error: false,
-        //     details: await res.getModelListDetails(Car, customFilter),
-        //     data
-        // })
         res.status(200).send({
             error: false,
-            details: await res.getModelListDetails(Car),
+            details: await res.getModelListDetails(Car, customFilter),
             data
         })
     },

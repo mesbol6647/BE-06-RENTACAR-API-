@@ -31,7 +31,7 @@ dbConnection()
 app.use(express.json())
 
 // Accept Form-Data:
-app.use(express.urlencoded({extended:true}))
+// app.use(express.urlencoded({extended:true}))
 // CORS Middleware:
 const cors = require('cors')
 app.use(cors())

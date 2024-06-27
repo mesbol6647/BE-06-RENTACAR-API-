@@ -9,7 +9,7 @@ module.exports = {
 
     isLogin: (req, res, next) => {
 
-        return next()
+        // return next()
 
         if (req.user && req.user.isActive) {
             next()

@@ -5,10 +5,11 @@
 // Middleware: permissions
 
 module.exports = {
+  
 
     isLogin: (req, res, next) => {
 
-        // return next()
+        return next()
 
         if (req.user && req.user.isActive) {
             next()
@@ -21,7 +22,7 @@ module.exports = {
 
     isStaff: (req, res, next) => {
 
-        //  return next()
+         return next()
 
         if (req.user && req.user.isActive && (req.user.isAdmin || req.user.isStaff)) {
             next()
@@ -33,7 +34,7 @@ module.exports = {
 
     isAdmin: (req, res, next) => {
 
-        // return next()
+        return next()
 
         if (req.user && req.user.isActive &&  req.user.isAdmin) {
             next()

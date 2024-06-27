@@ -26,4 +26,5 @@ module.exports = async function() {
         "isAdmin": true
     })
     console.log('- Admin user created')
+    
 }

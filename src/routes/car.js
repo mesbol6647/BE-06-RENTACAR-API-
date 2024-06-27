@@ -28,6 +28,7 @@ const permissions=require("../middlewares/permissions")
 
 router.route('/')
     .get(car.list)
+    // .post(permissions.isStaff, car.create)
     .post(permissions.isStaff, car.create)
     // .post(permissions.isStaff, upload.array("images") , car.create)
     // .post(permissions.isStaff, upload.any() , car.create)

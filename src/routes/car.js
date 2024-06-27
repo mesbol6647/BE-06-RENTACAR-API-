@@ -8,15 +8,8 @@ const router = require('express').Router()
 
 const car = require('../controllers/car')
 const permissions=require("../middlewares/permissions")
-const multer=require("multer")
-const upload=multer({
-    storage:multer.diskStorage({
-        destination:"./uploads",
-        filename:function(req, file,returnCallback){
-            returnCallback(null, file.originalname)
-        }
-    })
-})
+
+const upload=require("../middlewares/upload")
 
 // URL: /cars
 

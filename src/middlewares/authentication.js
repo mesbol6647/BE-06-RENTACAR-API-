@@ -1,7 +1,7 @@
 "use strict"
 /* -------------------------------------------------------
     NODEJS EXPRESS | CLARUSWAY FullStack Team
-------------------------------------------------------- *
+------------------------------------------------------- */
 // app.use(authentication)
 
 const Token = require('../models/token')
@@ -32,12 +32,12 @@ module.exports = async (req, res, next) => {
 
         next()
     }
-    ------------------------------------------------------- */
+  
 
-    "use strict"
+   // "use strict"
 /* -------------------------------------------------------
     NODEJS EXPRESS | CLARUSWAY FullStack Team
-
+  ------------------------------------------------------- *
 // app.use(authentication)
 
 const Token = require('../models/token');
@@ -70,10 +70,10 @@ module.exports = async (req, res, next) => {
     }
 };
 ------------------------------------------------------- */
-"use strict"
+//"use strict"
 /* -------------------------------------------------------
     NODEJS EXPRESS | CLARUSWAY FullStack Team
-------------------------------------------------------- */
+
 // app.use(authentication)
 
 const Token = require('../models/token');
@@ -112,3 +112,4 @@ module.exports = async (req, res, next) => {
         return res.status(401).send({ error: true, message: "Unauthorized: No token provided" });
     }
 };
+------------------------------------------------------- */

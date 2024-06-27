@@ -11,27 +11,31 @@ const permissions=require("../middlewares/permissions")
 
 // const upload=require("../middlewares/upload")
 
-const multer =require("multer")
-const upload=multer({
-    //dest:"./uploads"
-    storage: multer.diskStorage({
-        destination:"./uploads", 
+// const multer =require("multer")
+// const upload=multer({
+//     //dest:"./uploads"
+//     storage: multer.diskStorage({
+//         destination:"./uploads", 
+//         filename:function(req, file, returnCallback){
+//             returnCallback(null, "mesut.jpg")
+//         }
 
-       })
-})
+//        })
+// })
+
 // URL: /cars
 
 
 router.route('/')
     .get(car.list)
-    // .post(permissions.isStaff, car.create)
-    .post(permissions.isStaff, upload.array("images") , car.create)
+    .post(permissions.isStaff, car.create)
+    // .post(permissions.isStaff, upload.array("images") , car.create)
     // .post(permissions.isStaff, upload.any() , car.create)
 
 router.route('/:id')
     .get(car.read)
-    .put(permissions.isStaff,upload.array("images"), car.update)
-    .patch(permissions.isStaff, upload.array("images"), car.update)
+    .put(permissions.isStaff, car.update)
+    .patch(permissions.isStaff, car.update)
     .delete(permissions.isAdmin, car.delete)
 
 /* ------------------------------------------------------- */

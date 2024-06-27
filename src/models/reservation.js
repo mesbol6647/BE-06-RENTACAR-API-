@@ -24,13 +24,13 @@ const ReservationSchema= new mongoose.Schema({
     userId:{
         type: mongoose.Schema.Types.ObjectId,
         ref:"User",
-        required:true
+        // required:true
 
     },
     carId:{
         type: mongoose.Schema.Types.ObjectId,
         ref:"Car",
-        required:true
+        // required:true
 
     },
     startDate:{
@@ -49,12 +49,12 @@ const ReservationSchema= new mongoose.Schema({
     createdId:{
         type:mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        required: true,
+        // required: true,
       },
       updatedId:{
         type:mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        required: true,
+        // required: true,
       },
 
 
